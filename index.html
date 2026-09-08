@@ -1,0 +1,432 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>SortLab — Sorting Algorithm Visualizer</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+    <div class="background-glow glow-one"></div>
+    <div class="background-glow glow-two"></div>
+
+    <header class="hero">
+        <div class="brand">
+            <div class="brand-icon">
+                <span></span>
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+
+            <div>
+                <p class="eyebrow">ALGORITHM LAB</p>
+                <h1>Sort<span>Lab</span></h1>
+            </div>
+        </div>
+
+        <p class="hero-description">
+            Watch sorting algorithms come alive — one comparison at a time.
+        </p>
+    </header>
+
+
+    <main class="app">
+
+        <!-- MODE SWITCH -->
+        <section class="mode-switch glass-card">
+            <button class="mode-btn active" data-mode="single">
+                <span class="mode-icon">▣</span>
+                Single Mode
+            </button>
+
+            <button class="mode-btn" data-mode="race">
+                <span class="mode-icon">⚡</span>
+                Race Mode
+            </button>
+        </section>
+
+
+        <!-- GLOBAL CONTROLS -->
+        <section class="controls glass-card">
+
+            <div class="control-group algorithm-group single-control">
+                <label for="algorithm">Algorithm</label>
+
+                <select id="algorithm">
+                    <option value="bubble">Bubble Sort</option>
+                    <option value="selection">Selection Sort</option>
+                    <option value="insertion">Insertion Sort</option>
+                    <option value="merge">Merge Sort</option>
+                    <option value="quick">Quick Sort</option>
+                    <option value="heap">Heap Sort</option>
+                </select>
+            </div>
+
+
+            <div class="control-group race-control">
+                <label for="algorithmA">Algorithm A</label>
+
+                <select id="algorithmA">
+                    <option value="bubble">Bubble Sort</option>
+                    <option value="selection">Selection Sort</option>
+                    <option value="insertion">Insertion Sort</option>
+                    <option value="merge">Merge Sort</option>
+                    <option value="quick" selected>Quick Sort</option>
+                    <option value="heap">Heap Sort</option>
+                </select>
+            </div>
+
+
+            <div class="control-group race-control">
+                <label for="algorithmB">Algorithm B</label>
+
+                <select id="algorithmB">
+                    <option value="bubble">Bubble Sort</option>
+                    <option value="selection">Selection Sort</option>
+                    <option value="insertion">Insertion Sort</option>
+                    <option value="merge" selected>Merge Sort</option>
+                    <option value="quick">Quick Sort</option>
+                    <option value="heap">Heap Sort</option>
+                </select>
+            </div>
+
+
+            <div class="slider-control">
+                <div class="slider-heading">
+                    <label for="arraySize">Array Size</label>
+
+                    <span class="value-badge">
+                        <span id="arraySizeValue">45</span>
+                    </span>
+                </div>
+
+                <input
+                    type="range"
+                    id="arraySize"
+                    min="10"
+                    max="100"
+                    value="45"
+                >
+            </div>
+
+
+            <div class="slider-control">
+                <div class="slider-heading">
+                    <label for="speed">Animation Speed</label>
+
+                    <span class="value-badge">
+                        <span id="speedValue">Medium</span>
+                    </span>
+                </div>
+
+                <input
+                    type="range"
+                    id="speed"
+                    min="1"
+                    max="5"
+                    value="3"
+                >
+            </div>
+
+
+            <div class="button-group">
+
+                <button id="generateBtn" class="secondary-btn">
+                    <span>↻</span>
+                    Generate New Array
+                </button>
+
+                <button id="startBtn" class="primary-btn">
+                    <span>▶</span>
+                    Start Sorting
+                </button>
+
+                <button id="soundBtn" class="icon-btn" title="Toggle sound">
+                    🔊
+                </button>
+
+            </div>
+
+        </section>
+
+
+        <!-- SINGLE VISUALIZER -->
+        <section id="singleView" class="visualizer-section">
+
+            <div class="visualizer-header">
+                <div>
+                    <p class="section-label">VISUALIZATION</p>
+                    <h2 id="singleAlgorithmTitle">Bubble Sort</h2>
+                </div>
+
+                <div id="statusBadge" class="status-badge">
+                    Ready
+                </div>
+            </div>
+
+
+            <div class="visualizer glass-card">
+                <div id="bars" class="bars"></div>
+
+                <div class="visualizer-footer">
+                    <div class="legend">
+                        <div>
+                            <span class="legend-dot default-dot"></span>
+                            Default
+                        </div>
+
+                        <div>
+                            <span class="legend-dot compare-dot"></span>
+                            Comparing
+                        </div>
+
+                        <div>
+                            <span class="legend-dot swap-dot"></span>
+                            Swapping
+                        </div>
+
+                        <div>
+                            <span class="legend-dot sorted-dot"></span>
+                            Sorted
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="stats-grid">
+
+                <div class="stat-card glass-card">
+                    <span class="stat-icon">⇄</span>
+
+                    <div>
+                        <p>Comparisons</p>
+                        <strong id="comparisons">0</strong>
+                    </div>
+                </div>
+
+
+                <div class="stat-card glass-card">
+                    <span class="stat-icon">↕</span>
+
+                    <div>
+                        <p>Swaps</p>
+                        <strong id="swaps">0</strong>
+                    </div>
+                </div>
+
+
+                <div class="stat-card glass-card">
+                    <span class="stat-icon">◷</span>
+
+                    <div>
+                        <p>Elapsed</p>
+                        <strong><span id="time">0</span> ms</strong>
+                    </div>
+                </div>
+
+
+                <div class="stat-card glass-card">
+                    <span class="stat-icon">▤</span>
+
+                    <div>
+                        <p>Elements</p>
+                        <strong id="elementCount">45</strong>
+                    </div>
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- RACE VISUALIZER -->
+        <section id="raceView" class="race-view hidden">
+
+            <div class="race-heading">
+                <div>
+                    <p class="section-label">HEAD-TO-HEAD</p>
+                    <h2>Algorithm Race</h2>
+                </div>
+
+                <div class="race-message" id="raceMessage">
+                    Same array. Same speed. Different algorithms.
+                </div>
+            </div>
+
+
+            <div class="race-grid">
+
+                <!-- PANEL A -->
+                <article class="race-panel glass-card">
+
+                    <div class="panel-header">
+                        <div>
+                            <span class="panel-label">ALGORITHM A</span>
+                            <h3 id="raceTitleA">Quick Sort</h3>
+                        </div>
+
+                        <span id="raceStatusA" class="status-badge">
+                            Ready
+                        </span>
+                    </div>
+
+                    <div id="barsA" class="bars race-bars"></div>
+
+                    <div class="panel-stats">
+
+                        <div>
+                            <span>Comparisons</span>
+                            <strong id="comparisonsA">0</strong>
+                        </div>
+
+                        <div>
+                            <span>Swaps</span>
+                            <strong id="swapsA">0</strong>
+                        </div>
+
+                        <div>
+                            <span>Time</span>
+                            <strong><span id="timeA">0</span> ms</strong>
+                        </div>
+
+                    </div>
+
+                </article>
+
+
+                <!-- PANEL B -->
+                <article class="race-panel glass-card">
+
+                    <div class="panel-header">
+                        <div>
+                            <span class="panel-label">ALGORITHM B</span>
+                            <h3 id="raceTitleB">Merge Sort</h3>
+                        </div>
+
+                        <span id="raceStatusB" class="status-badge">
+                            Ready
+                        </span>
+                    </div>
+
+                    <div id="barsB" class="bars race-bars"></div>
+
+                    <div class="panel-stats">
+
+                        <div>
+                            <span>Comparisons</span>
+                            <strong id="comparisonsB">0</strong>
+                        </div>
+
+                        <div>
+                            <span>Swaps</span>
+                            <strong id="swapsB">0</strong>
+                        </div>
+
+                        <div>
+                            <span>Time</span>
+                            <strong><span id="timeB">0</span> ms</strong>
+                        </div>
+
+                    </div>
+
+                </article>
+
+            </div>
+
+        </section>
+
+
+        <!-- EXPLANATION -->
+        <section class="info-section">
+
+            <div class="section-label">LEARN WHILE YOU WATCH</div>
+
+            <div class="algorithm-cards">
+
+                <div class="info-card">
+                    <span>01</span>
+                    <h3>Bubble Sort</h3>
+                    <p>
+                        Repeatedly compares neighboring elements and swaps
+                        them when they are in the wrong order.
+                    </p>
+                    <small>O(n²)</small>
+                </div>
+
+                <div class="info-card">
+                    <span>02</span>
+                    <h3>Selection Sort</h3>
+                    <p>
+                        Finds the smallest remaining element and places it
+                        into its final position.
+                    </p>
+                    <small>O(n²)</small>
+                </div>
+
+                <div class="info-card">
+                    <span>03</span>
+                    <h3>Insertion Sort</h3>
+                    <p>
+                        Builds the sorted section one element at a time by
+                        inserting each value into its correct position.
+                    </p>
+                    <small>O(n²)</small>
+                </div>
+
+                <div class="info-card">
+                    <span>04</span>
+                    <h3>Merge Sort</h3>
+                    <p>
+                        Recursively divides the array, then merges the
+                        sorted halves back together.
+                    </p>
+                    <small>O(n log n)</small>
+                </div>
+
+                <div class="info-card">
+                    <span>05</span>
+                    <h3>Quick Sort</h3>
+                    <p>
+                        Selects a pivot and partitions elements around it,
+                        then recursively sorts both sides.
+                    </p>
+                    <small>O(n log n)</small>
+                </div>
+
+                <div class="info-card">
+                    <span>06</span>
+                    <h3>Heap Sort</h3>
+                    <p>
+                        Builds a max heap and repeatedly moves the largest
+                        element to its final position.
+                    </p>
+                    <small>O(n log n)</small>
+                </div>
+
+            </div>
+
+        </section>
+
+    </main>
+
+
+    <footer>
+        <p>
+            Built for learning algorithms visually.
+        </p>
+    </footer>
+
+
+    <script src="script.js"></script>
+</body>
+</html>
